@@ -36,18 +36,49 @@ class Welcome extends CI_Controller
         $data['EMAIL'] = $this->input->post('email', TRUE);
         $data['STREET'] = $this->input->post('street', TRUE);
         $data['CITY'] = $this->input->post('city', TRUE);
-        $submit=$this->input->post('new',TRUE);
-        if($submit=='SUBMIT')
+        $data['STATE'] = $this->input->post('state', TRUE);
+        $data['COUNTRY'] = $this->input->post('country', TRUE);
+        $submit=$this->input->post('login',TRUE);
+        print_r($data);
+        echo $submit;
+        if($submit=='Register')
         {
             $this->_insert($data);
         }
+        echo "done";
+
     }
 
-    public function findServiceProvider(){
+    public function currentLocation(){
+        $this->load->view('currentMap');
+    }
+    public function findServiceProvider()
+    {
+        $data="";
+        $this->load->view('map',$data);
 //        show map with user's location ... See if there's any requirement for calling another function
 //        One possible way is via extracting data from database and show every database on map
 //        other being via script for lats and longs...
     }
-
+    function _insert($data)
+    {
+        $this->load->model('User_model');
+        $this->User_model->_insert($data);
+    }
+    public function fetch_data_from_db($id)
+    {
+        $query = $this->get_where($id);
+        foreach($query->result() as $row)
+        {
+            $data['id']=$row->id;
+            $data['category'] = $row->category;
+            $data['category_url']=$row->category_url;
+        }
+        if(!isset($data))
+        {
+            $data = "";
+        }
+        return $data;
+    }
 
 }

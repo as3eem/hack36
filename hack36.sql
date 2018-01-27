@@ -10,6 +10,8 @@ CREATE TABLE IF NOT EXISTS `user` (
    	`CONTACT` varchar(100),
    	`STREET` varchar(125),
    	`CITY` varchar(1000),
+   	`COUNTRY` varchar(125),
+   	`STATE` varchar(125),
    	`PROFESSION` varchar(125),
   PRIMARY KEY (id)
 ) ;
