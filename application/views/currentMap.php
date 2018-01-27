@@ -37,8 +37,9 @@
 </head>
 <body>
 <div class="container">
-    <form action="<?=base_url('index.php/welcome/')?>">
-        <input class="hola" type="submit" value="Search Nearby Local businesses">
+    <form action="<?=base_url('index.php/welcome/findServiceProvider')?>" method="post">
+        <input class="hola" name="city" type="text" placeholder="Allahabad">
+        <input class="hola" name="citySearch"  type="submit" value="Search Nearby">
     </form>
 </div>
 <div id="map"></div>

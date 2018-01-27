@@ -40,12 +40,11 @@ class Welcome extends CI_Controller
         $data['COUNTRY'] = $this->input->post('country', TRUE);
         $submit=$this->input->post('login',TRUE);
         print_r($data);
-        echo $submit;
         if($submit=='Register')
         {
             $this->_insert($data);
         }
-        echo "done";
+        redirect(base_url('index.php/welcome'));
 
     }
 
@@ -54,7 +53,10 @@ class Welcome extends CI_Controller
     }
     public function findServiceProvider()
     {
-        $data="";
+        $city=$this->input->post('city');
+        $data=$this->getData($city);
+        $data=$data->result();
+//        echo "<pre>";print_r($data);echo "</pre>";die;
         $this->load->view('map',$data);
 //        show map with user's location ... See if there's any requirement for calling another function
 //        One possible way is via extracting data from database and show every database on map
@@ -65,6 +67,13 @@ class Welcome extends CI_Controller
         $this->load->model('User_model');
         $this->User_model->_insert($data);
     }
+
+    public function getData($city){
+        $this->load->model('User_model');
+        $data=$this->User_model->get_where_custom('CITY',$city);
+        return $data;
+    }
+
     public function fetch_data_from_db($id)
     {
         $query = $this->get_where($id);
